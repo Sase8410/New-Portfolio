@@ -4,7 +4,7 @@ export const projects = [
     description:
       "Conducted computational research investigating how structured sparsity patterns can reduce the cost of encrypted machine learning inference. Designed and evaluated random, banded, and block sparse matrices, measuring the trade-off between computational efficiency and predictive accuracy in privacy-preserving environments.",
     tags: ["MATLAB"],
-    link: "#",
+    link: "https://github.com/Sase8410/Sparse-Matrix-Project",
     status: "Completed",
   },
   {

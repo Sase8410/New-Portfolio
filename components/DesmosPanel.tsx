@@ -17,49 +17,53 @@ const formulas = [
   "σ(x) = 3/(1 + e^{-1.1x}) - 1.5",
   "r = 1.6cos(5θ)",
   "x = 16sin³(t), y = 13cos(t) - 5cos(2t)",
+  "x = 2.1sin(3t + π/2), y = 2.1sin(4t)",
+  "r = 0.18t",
+  "y = 2.4e^{-0.18|x|}sin(2.8x)",
 ];
 
 type DesmosPanelProps = {
   collapsed: boolean;
   setCollapsed: (value: boolean) => void;
+  formulaIndex: number;
+  typingDelay?: number;
 };
 
 export default function DesmosPanel({
   collapsed,
   setCollapsed,
+  formulaIndex,
+  typingDelay = 900,
 }: DesmosPanelProps) {
-  const [formulaIndex, setFormulaIndex] = useState(0);
   const [visibleText, setVisibleText] = useState("");
 
   useEffect(() => {
-    const formula = formulas[formulaIndex];
-    let i = 0;
-    let typing: number | undefined;
-    let nextFormula: number | undefined;
+  const formula = formulas[formulaIndex % formulas.length];
 
-    const reset = window.setTimeout(() => {
-      setVisibleText("");
+  let i = 0;
+  let typing: number | undefined;
 
-      typing = window.setInterval(() => {
-        setVisibleText(formula.slice(0, i + 1));
-        i++;
+  const startTyping = window.setTimeout(() => {
+    setVisibleText("");
 
-        if (i >= formula.length) {
-          if (typing) window.clearInterval(typing);
+    typing = window.setInterval(() => {
+      setVisibleText(formula.slice(0, i + 1));
+      i++;
 
-          nextFormula = window.setTimeout(() => {
-            setFormulaIndex((current) => (current + 1) % formulas.length);
-          }, 5000);
-        }
-      }, 70);
-    }, 0);
+      if (i >= formula.length && typing) {
+        window.clearInterval(typing);
+      }
+    }, 55);
+  }, 900);
 
-    return () => {
-      window.clearTimeout(reset);
-      if (typing) window.clearInterval(typing);
-      if (nextFormula) window.clearTimeout(nextFormula);
-    };
-  }, [formulaIndex]);
+  return () => {
+    window.clearTimeout(startTyping);
+
+    if (typing) {
+      window.clearInterval(typing);
+    }
+  };
+}, [formulaIndex]);
 
   return (
     <aside
@@ -83,7 +87,9 @@ export default function DesmosPanel({
           <button
             onClick={() => setCollapsed(!collapsed)}
             className="flex items-center justify-center"
-            aria-label={collapsed ? "Expand Desmos panel" : "Collapse Desmos panel"}
+            aria-label={
+              collapsed ? "Expand Desmos panel" : "Collapse Desmos panel"
+            }
           >
             {collapsed ? (
               <ChevronRight size={22} strokeWidth={2.5} className="text-gray-600" />

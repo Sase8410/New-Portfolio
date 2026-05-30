@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail } from "lucide-react";
 
 import { projects } from "@/data/projects";
 
@@ -16,16 +15,53 @@ import DesmosPanel from "@/components/DesmosPanel";
 
 export default function Home() {
   const [desmosCollapsed, setDesmosCollapsed] = useState(false);
+  const [graphIndex, setGraphIndex] = useState(0);
+
+  const [emailOpen, setEmailOpen] = useState(false);
+  const [messageSent, setMessageSent] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    const response = await fetch("/api/contact", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: formData.get("name"),
+        email: formData.get("email"),
+        message: formData.get("message"),
+      }),
+    });
+
+    if (response.ok) {
+      setMessageSent(true);
+      form.reset();
+    } else {
+      alert("Something went wrong.");
+    }
+  };
 
   return (
     <main className="relative min-h-screen overflow-x-hidden">
       <ParticleBackground />
       <CoordinatePlane />
-      <FullPageGraph />
+      <FullPageGraph
+        graphIndex={graphIndex}
+        onCycleComplete={() => {
+          setGraphIndex((current) => (current + 1) % 7);
+        }}
+      />
 
       <DesmosPanel
         collapsed={desmosCollapsed}
         setCollapsed={setDesmosCollapsed}
+        formulaIndex={graphIndex}
+        typingDelay={900}
       />
 
       <nav className="fixed top-0 z-50 flex w-full items-center justify-between border-b border-white/10 bg-[#2f2f2f] px-6 py-4 md:px-20">
@@ -46,6 +82,8 @@ export default function Home() {
           <a
             href="/resume/Santiago-Segovia-Resume.pdf"
             className="transition hover:text-blue-300"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             Resume
           </a>
@@ -175,7 +213,11 @@ export default function Home() {
                 <Link
                   href={project.link}
                   target={project.link.startsWith("http") ? "_blank" : undefined}
-                  rel={project.link.startsWith("http") ? "noopener noreferrer" : undefined}
+                  rel={
+                    project.link.startsWith("http")
+                      ? "noopener noreferrer"
+                      : undefined
+                  }
                   className="mt-8 inline-block rounded-full border border-black/10 px-5 py-2 text-sm text-gray-700 transition hover:border-blue-500 hover:text-blue-500"
                 >
                   View Details
@@ -195,18 +237,119 @@ export default function Home() {
           </h2>
 
           <div className="mt-8 flex flex-wrap gap-4">
-            <a className="rounded-full border border-black/10 bg-white px-5 py-3 text-gray-700 transition hover:border-blue-500 hover:text-blue-500">
+            <a
+              href="https://github.com/Sase8410"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full border border-black/10 bg-white px-6 py-3 text-gray-700 transition hover:border-blue-500 hover:text-blue-500"
+            >
               GitHub
             </a>
 
-            <a className="rounded-full border border-black/10 bg-white px-5 py-3 text-gray-700 transition hover:border-blue-500 hover:text-blue-500">
+            <a
+              href="https://linkedin.com/in/santiago-segovia"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full border border-black/10 bg-white px-6 py-3 text-gray-700 transition hover:border-blue-500 hover:text-blue-500"
+            >
               LinkedIn
             </a>
 
-            <a className="flex items-center gap-2 rounded-full border border-black/10 bg-white px-5 py-3 text-gray-700 transition hover:border-blue-500 hover:text-blue-500">
-              <Mail size={18} /> Email
-            </a>
+            <button
+              onClick={() => {
+                setMessageSent(false);
+                setEmailOpen(true);
+              }}
+              className="rounded-full border border-black/10 bg-white px-6 py-3 text-gray-700 transition hover:border-blue-500 hover:text-blue-500"
+            >
+              Email
+            </button>
           </div>
+
+          {emailOpen && (
+            <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 px-6 backdrop-blur-sm">
+              <div className="w-full max-w-lg rounded-3xl border border-black/10 bg-white p-8 shadow-2xl">
+                <div className="mb-6 flex items-start justify-between gap-4">
+                  <div>
+                    <p className="text-sm uppercase tracking-[0.3em] text-blue-500">
+                      Send a Message
+                    </p>
+                    <h3 className="mt-2 text-3xl font-bold text-black">
+                      Contact Santiago
+                    </h3>
+                  </div>
+
+                  <button
+                    onClick={() => {
+                      setMessageSent(false);
+                      setEmailOpen(false);
+                    }}
+                    className="rounded-full border border-black/10 px-3 py-1 text-gray-500 transition hover:border-blue-500 hover:text-blue-500"
+                  >
+                    ✕
+                  </button>
+                </div>
+
+                {messageSent ? (
+                  <div className="py-8 text-center">
+                    <div className="mb-4 text-5xl text-blue-500">✓</div>
+
+                    <h3 className="text-2xl font-bold text-black">
+                      Message Sent
+                    </h3>
+
+                    <p className="mt-3 text-gray-600">
+                      Thank you for reaching out.
+                      <br />
+                      I’ll get back to you as soon as possible.
+                    </p>
+
+                    <button
+                      onClick={() => {
+                        setMessageSent(false);
+                        setEmailOpen(false);
+                      }}
+                      className="mt-8 rounded-full bg-black px-6 py-3 text-white transition hover:opacity-80"
+                    >
+                      Close
+                    </button>
+                  </div>
+                ) : (
+                  <form onSubmit={handleSubmit} className="space-y-4">
+                    <input
+                      name="name"
+                      required
+                      placeholder="Name"
+                      className="w-full rounded-2xl border border-black/10 px-4 py-3 outline-none transition focus:border-blue-500"
+                    />
+
+                    <input
+                      name="email"
+                      type="email"
+                      required
+                      placeholder="Email"
+                      className="w-full rounded-2xl border border-black/10 px-4 py-3 outline-none transition focus:border-blue-500"
+                    />
+
+                    <textarea
+                      name="message"
+                      required
+                      placeholder="Message"
+                      rows={5}
+                      className="w-full resize-none rounded-2xl border border-black/10 px-4 py-3 outline-none transition focus:border-blue-500"
+                    />
+
+                    <button
+                      type="submit"
+                      className="w-full rounded-full bg-black px-6 py-3 font-semibold text-white transition hover:opacity-80"
+                    >
+                      Send Message
+                    </button>
+                  </form>
+                )}
+              </div>
+            </div>
+          )}
         </section>
       </div>
     </main>
