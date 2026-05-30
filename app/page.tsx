@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Mail } from "lucide-react";
@@ -171,9 +172,14 @@ export default function Home() {
                   ))}
                 </div>
 
-                <button className="mt-8 rounded-full border border-black/10 px-5 py-2 text-sm text-gray-700 transition hover:border-blue-500 hover:text-blue-500">
+                <Link
+                  href={project.link}
+                  target={project.link.startsWith("http") ? "_blank" : undefined}
+                  rel={project.link.startsWith("http") ? "noopener noreferrer" : undefined}
+                  className="mt-8 inline-block rounded-full border border-black/10 px-5 py-2 text-sm text-gray-700 transition hover:border-blue-500 hover:text-blue-500"
+                >
                   View Details
-                </button>
+                </Link>
               </motion.div>
             ))}
           </div>

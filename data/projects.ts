@@ -12,7 +12,7 @@ export const projects = [
     description:
       "Built an information retrieval system that ranks product reviews according to user-specified opinions and product attributes. Designed multiple retrieval models, performed manual Precision@k evaluations, and improved ranking quality through iterative query refinement and relevance analysis.",
     tags: ["Python"],
-    link: "#",
+    link: "https://github.com/Sase8410/Amazon-Opinion-Search-Engine-NLP-Project-",
     status: "Completed",
   },
   {
@@ -20,7 +20,7 @@ export const projects = [
     description:
       "Engineered a CUDA-based linear algebra engine capable of solving large dense systems up to 41× faster than a CPU implementation. Designed optimized GPU kernels using shared-memory tiling and memory-access optimizations while analyzing scalability across increasing matrix dimensions.",
     tags: ["CUDA", "C++"],
-    link: "#",
+    link: "https://github.com/Sase8410/GPU-Project",
     status: "Completed",
   },
   {
@@ -28,7 +28,7 @@ export const projects = [
     description:
       "Designed and developed a full-stack volunteer management platform supporting authentication, event coordination, assignment tracking, reporting, and administrative workflows. Implemented role-based access control, database-backed automation, and scalable dashboard interfaces for managing organizational operations.",
     tags: ["PHP", "JavaScript", "HTML", "CSS", "SQL"],
-    link: "#",
+    link: "https://github.com/Sase8410/COSC-4353-Project",
     status: "Completed",
   },
   {
