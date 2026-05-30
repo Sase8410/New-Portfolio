@@ -1,65 +1,208 @@
-import Image from "next/image";
+"use client";
+
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Mail } from "lucide-react";
+
+import { projects } from "@/data/projects";
+
+import AboutSection from "@/components/AboutSection";
+import SkillsSection from "@/components/SkillsSection";
+import ParticleBackground from "@/components/ParticleBackground";
+import CoordinatePlane from "@/components/CoordinatePlane";
+import FullPageGraph from "@/components/FullPageGraph";
+import DesmosPanel from "@/components/DesmosPanel";
 
 export default function Home() {
+  const [desmosCollapsed, setDesmosCollapsed] = useState(false);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <main className="relative min-h-screen overflow-x-hidden">
+      <ParticleBackground />
+      <CoordinatePlane />
+      <FullPageGraph />
+
+      <DesmosPanel
+        collapsed={desmosCollapsed}
+        setCollapsed={setDesmosCollapsed}
+      />
+
+      <nav className="fixed top-0 z-50 flex w-full items-center justify-between border-b border-white/10 bg-[#2f2f2f] px-6 py-4 md:px-20">
+        <h1 className="text-xl font-semibold tracking-wide text-white">
+          Santi.dev
+        </h1>
+
+        <div className="hidden gap-8 text-sm text-gray-200 md:flex">
+          <a href="#about" className="transition hover:text-blue-300">
+            About
+          </a>
+          <a href="#skills" className="transition hover:text-blue-300">
+            Skills
+          </a>
+          <a href="#projects" className="transition hover:text-blue-300">
+            Projects
+          </a>
+          <a
+            href="/resume/Santiago-Segovia-Resume.pdf"
+            className="transition hover:text-blue-300"
+          >
+            Resume
+          </a>
+          <a href="#contact" className="transition hover:text-blue-300">
+            Contact
+          </a>
+        </div>
+      </nav>
+
+      <div
+        className={`relative z-20 transition-all duration-500 ease-in-out ${
+          desmosCollapsed ? "md:ml-[72px]" : "md:ml-[420px]"
+        }`}
+      >
+        <section
+          id="hero"
+          className="relative flex min-h-screen items-center px-6 pb-24 pt-40 md:px-20"
+        >
+          <div className="relative z-20 max-w-3xl -translate-y-24 rounded-3xl border border-black/10 bg-white/75 p-8 shadow-sm backdrop-blur-sm">
+            <motion.p
+              className="mb-4 text-sm uppercase tracking-[0.4em] text-blue-500"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+              Mathematical Love Letter
+            </motion.p>
+
+            <motion.h1
+              className="text-5xl font-bold leading-tight text-black md:text-6xl"
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.15 }}
             >
-              Learning
-            </a>{" "}
-            center.
+              Where mathematics meets software.
+            </motion.h1>
+
+            <motion.p
+              className="mt-6 max-w-2xl text-lg leading-8 text-gray-600"
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+            >
+              I build elegant systems inspired by numerical analysis, machine
+              learning, sparse matrices, algorithms, and the beauty of
+              structure.
+            </motion.p>
+
+            <motion.div
+              className="mt-8 flex flex-wrap gap-4"
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.45 }}
+            >
+              <a
+                href="#projects"
+                className="rounded-full border border-black/10 bg-black px-6 py-3 font-semibold text-white transition hover:opacity-80"
+              >
+                View Projects
+              </a>
+
+              <a
+                href="#contact"
+                className="rounded-full border border-black/10 bg-white px-6 py-3 text-gray-700 transition hover:border-blue-500 hover:text-blue-500"
+              >
+                Contact Me
+              </a>
+
+              <a
+                href="/resume/Santiago-Segovia-Resume.pdf"
+                download
+                className="rounded-full border border-black/10 bg-white px-6 py-3 text-gray-700 transition hover:border-blue-500 hover:text-blue-500"
+              >
+                Download Resume
+              </a>
+            </motion.div>
+          </div>
+        </section>
+
+        <AboutSection />
+
+        <SkillsSection />
+
+        <section id="projects" className="relative z-20 px-6 py-24 md:px-20">
+          <p className="mb-3 text-sm uppercase tracking-[0.3em] text-blue-500">
+            Proofs of Work
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+
+          <h2 className="mb-12 text-4xl font-bold text-black md:text-5xl">
+            Selected Projects
+          </h2>
+
+          <div className="grid gap-8 md:grid-cols-2">
+            {projects.map((project, index) => (
+              <motion.div
+                key={project.title}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                whileHover={{ y: -10, scale: 1.02 }}
+                className="group relative overflow-hidden rounded-3xl border border-black/10 bg-white p-7 shadow-sm transition hover:shadow-xl"
+              >
+                <div className="mb-5">
+                  <span className="rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs uppercase tracking-[0.2em] text-blue-500">
+                    {project.status}
+                  </span>
+                </div>
+
+                <h3 className="text-3xl font-semibold text-black transition group-hover:text-blue-500">
+                  {project.title}
+                </h3>
+
+                <p className="mt-5 leading-7 text-gray-600">
+                  {project.description}
+                </p>
+
+                <div className="mt-6 flex flex-wrap gap-2">
+                  {project.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="rounded-full border border-black/10 px-3 py-1 text-sm text-gray-600"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                <button className="mt-8 rounded-full border border-black/10 px-5 py-2 text-sm text-gray-700 transition hover:border-blue-500 hover:text-blue-500">
+                  View Details
+                </button>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+
+        <section id="contact" className="relative z-20 px-6 py-24 md:px-20">
+          <p className="mb-3 text-sm uppercase tracking-[0.3em] text-blue-500">
+            Connect the Points
+          </p>
+
+          <h2 className="text-4xl font-bold text-black">
+            Let’s build something meaningful.
+          </h2>
+
+          <div className="mt-8 flex flex-wrap gap-4">
+            <a className="rounded-full border border-black/10 bg-white px-5 py-3 text-gray-700 transition hover:border-blue-500 hover:text-blue-500">
+              GitHub
+            </a>
+
+            <a className="rounded-full border border-black/10 bg-white px-5 py-3 text-gray-700 transition hover:border-blue-500 hover:text-blue-500">
+              LinkedIn
+            </a>
+
+            <a className="flex items-center gap-2 rounded-full border border-black/10 bg-white px-5 py-3 text-gray-700 transition hover:border-blue-500 hover:text-blue-500">
+              <Mail size={18} /> Email
+            </a>
+          </div>
+        </section>
+      </div>
+    </main>
   );
 }
