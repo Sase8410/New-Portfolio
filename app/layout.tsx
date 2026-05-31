@@ -20,7 +20,7 @@ const playfair = Playfair_Display({
 
 export const metadata: Metadata = {
   title: "Santiago Segovia - Portfolio",
-  description: "Where mathematics meets software.",
+  description: "My computer science/mathemtatics portofolio showcasing my projects and skills in numerical computing, machine learning, and software engineering.",
   icons: {
     icon: "/favicon.png",
   },
