@@ -1,6 +1,12 @@
 import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
+import { IBM_Plex_Mono } from "next/font/google";
+
+const ibmPlexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+});
 
 const inter = Inter({
   subsets: ["latin"],
@@ -13,7 +19,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Mathematical Love Letter",
+  title: "Santiago Segovia - Portfolio",
   description: "Where mathematics meets software.",
   icons: {
     icon: "/favicon.png",

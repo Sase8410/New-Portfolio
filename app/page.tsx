@@ -3,6 +3,12 @@
 import Link from "next/link";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { IBM_Plex_Mono } from "next/font/google";
+
+const ibmPlexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+});
 
 import { projects } from "@/data/projects";
 
@@ -64,9 +70,14 @@ export default function Home() {
         typingDelay={900}
       />
 
-      <nav className="fixed top-0 z-50 flex w-full items-center justify-between border-b border-white/10 bg-[#2f2f2f] px-6 py-4 md:px-20">
-        <h1 className="text-xl font-semibold tracking-wide text-white">
-          Santi.dev
+      <nav
+        className={`${ibmPlexMono.className} fixed top-0 z-50 flex w-full items-center justify-between border-b border-white/10 bg-[#2f2f2f] px-6 py-4 md:px-20 tracking-wide`}
+      >
+        <h1
+          style={{ color: "white" }}
+          className="text-xl font-semibold tracking-[0.2em]"
+        >
+          S. Segovia
         </h1>
 
         <div className="hidden gap-8 text-sm text-gray-200 md:flex">
@@ -108,7 +119,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
             >
-              Mathematical Love Letter
+              Santiago Segovia
             </motion.p>
 
             <motion.h1

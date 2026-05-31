@@ -39,32 +39,42 @@ export default function DesmosPanel({
   const [visibleText, setVisibleText] = useState("");
 
   useEffect(() => {
-  const formula = formulas[formulaIndex % formulas.length];
+    setCollapsed(true);
 
-  let i = 0;
-  let typing: number | undefined;
+    const timer = window.setTimeout(() => {
+      setCollapsed(false);
+    }, 750);
 
-  const startTyping = window.setTimeout(() => {
-    setVisibleText("");
+    return () => window.clearTimeout(timer);
+  }, [setCollapsed]);
 
-    typing = window.setInterval(() => {
-      setVisibleText(formula.slice(0, i + 1));
-      i++;
+  useEffect(() => {
+    const formula = formulas[formulaIndex % formulas.length];
 
-      if (i >= formula.length && typing) {
+    let i = 0;
+    let typing: number | undefined;
+
+    const startTyping = window.setTimeout(() => {
+      setVisibleText("");
+
+      typing = window.setInterval(() => {
+        setVisibleText(formula.slice(0, i + 1));
+        i++;
+
+        if (i >= formula.length && typing) {
+          window.clearInterval(typing);
+        }
+      }, 55);
+    }, typingDelay);
+
+    return () => {
+      window.clearTimeout(startTyping);
+
+      if (typing) {
         window.clearInterval(typing);
       }
-    }, 55);
-  }, typingDelay);
-
-  return () => {
-    window.clearTimeout(startTyping);
-
-    if (typing) {
-      window.clearInterval(typing);
-    }
-  };
-}, [formulaIndex]);
+    };
+  }, [formulaIndex, typingDelay]);
 
   return (
     <aside
@@ -93,9 +103,17 @@ export default function DesmosPanel({
             }
           >
             {collapsed ? (
-              <ChevronRight size={22} strokeWidth={2.5} className="text-gray-600" />
+              <ChevronRight
+                size={22}
+                strokeWidth={2.5}
+                className="text-gray-600"
+              />
             ) : (
-              <ChevronLeft size={22} strokeWidth={2.5} className="text-gray-600" />
+              <ChevronLeft
+                size={22}
+                strokeWidth={2.5}
+                className="text-gray-600"
+              />
             )}
           </button>
         </div>
