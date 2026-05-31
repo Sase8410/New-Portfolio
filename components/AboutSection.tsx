@@ -6,15 +6,11 @@ export default function AboutSection() {
       </p>
 
       <h2 className="max-w-3xl text-4xl font-bold md:text-5xl">
-        I’m a mathematics and computer science graduate building at the
-        intersection of algorithms, data, and numerical intelligence.
+        I'm a mathematics and computer science graduate from University of Houston.
       </h2>
 
       <p className="mt-8 max-w-3xl text-lg leading-8 text-slate-500">
-        My work is driven by a love for structure: sparse matrices, numerical
-        methods, machine learning, image processing, CUDA programming, databases,
-        and full-stack systems. I enjoy turning abstract mathematical ideas into
-        practical software that can be tested, optimized, and understood.
+        I have a strong passion for mathematics and computer science, and I enjoy expanding my knowledge in these fields, particularly in numerical analysis, machine learning, and data science. In my free time, I like to work on personal projects that allow me to showcase my skills, watch movies, play video games and football. 
       </p>
 
       <div className="mt-10 grid gap-4 md:grid-cols-3">

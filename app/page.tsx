@@ -128,7 +128,7 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.15 }}
             >
-              Where mathematics meets software.
+              Mathematician & Computer Scientist.
             </motion.h1>
 
             <motion.p
@@ -137,9 +137,7 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
             >
-              I build elegant systems inspired by numerical analysis, machine
-              learning, sparse matrices, algorithms, and the beauty of
-              structure.
+              I design and build full-stack applications, machine learning systems, and computational tools driven by strong mathematical foundations.
             </motion.p>
 
             <motion.div
@@ -284,8 +282,8 @@ export default function Home() {
                     <p className="text-sm uppercase tracking-[0.3em] text-blue-500">
                       Send a Message
                     </p>
-                    <h3 className="mt-2 text-3xl font-bold text-black">
-                      Contact Santiago
+                    <h3 className="mt-2 text-xl font-bold text-black">
+                      segoviasantiago945@gmail.com
                     </h3>
                   </div>
 

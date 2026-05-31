@@ -36,7 +36,7 @@ export const projects = [
     description:
       "Engineered a full-stack developer portfolio using Next.js and TypeScript to showcase research, machine learning, numerical computing, and software engineering projects. Implemented responsive UI components, interactive mathematical visualizations, project detail pages, and a backend-powered contact system to deliver a professional user experience.",
     tags: ["TypeScript", "JavaScript", "HTML", "CSS", "React", "Next.js", "Tailwind CSS"],
-    link: "#",
+    link: "#About",
     status: "Completed",
   },
 ];
