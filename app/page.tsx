@@ -53,7 +53,7 @@ export default function Home() {
       <FullPageGraph
         graphIndex={graphIndex}
         onCycleComplete={() => {
-          setGraphIndex((current) => (current + 1) % 7);
+          setGraphIndex((current) => (current + 1));
         }}
       />
 
@@ -168,13 +168,12 @@ export default function Home() {
 
         <section id="projects" className="relative z-20 px-6 py-24 md:px-20">
           <p className="mb-3 text-sm uppercase tracking-[0.3em] text-blue-500">
-            Proofs of Work
+            Proofs
           </p>
 
           <h2 className="mb-12 text-4xl font-bold text-black md:text-5xl">
             Selected Projects
           </h2>
-
           <div className="grid gap-8 md:grid-cols-2">
             {projects.map((project, index) => (
               <motion.div
@@ -183,7 +182,7 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
                 whileHover={{ y: -10, scale: 1.02 }}
-                className="group relative overflow-hidden rounded-3xl border border-black/10 bg-white p-7 shadow-sm transition hover:shadow-xl"
+                className="group relative overflow-hidden rounded-3xl border border-black/10 bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
               >
                 <div className="mb-5">
                   <span className="rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs uppercase tracking-[0.2em] text-blue-500">

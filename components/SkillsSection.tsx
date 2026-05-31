@@ -17,7 +17,7 @@ export default function SkillsSection() {
   return (
     <section id="skills" className="relative z-20 px-6 py-24 md:px-20">
       <p className="mb-3 text-sm uppercase tracking-[0.3em] text-pink-400">
-        Toolbox
+        Theorems
       </p>
 
       <h2 className="mb-12 text-4xl font-bold text-gray-900 md:text-5xl">

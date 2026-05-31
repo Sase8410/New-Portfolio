@@ -20,6 +20,7 @@ const formulas = [
   "x = 2.1sin(3t + π/2), y = 2.1sin(4t)",
   "r = 0.18t",
   "y = 2.4e^{-0.18|x|}sin(2.8x)",
+  "tan(x² + y²) = 1",
 ];
 
 type DesmosPanelProps = {
@@ -54,7 +55,7 @@ export default function DesmosPanel({
         window.clearInterval(typing);
       }
     }, 55);
-  }, 900);
+  }, typingDelay);
 
   return () => {
     window.clearTimeout(startTyping);
@@ -122,16 +123,9 @@ export default function DesmosPanel({
             />
           </div>
 
-          <div className="flex h-8 border-b border-black/5 bg-[#fafafa]">
+          <div className="flex h-8 border-b border-transparent bg-[#fafafa]">
             <div className="flex w-9 items-start justify-center pt-1 text-xs text-gray-500">
               2
-            </div>
-          </div>
-
-          <div className="absolute bottom-4 left-0 w-full text-center text-xs text-gray-300">
-            powered by
-            <div className="text-2xl font-semibold tracking-tight text-gray-300">
-              desmos
             </div>
           </div>
         </>
