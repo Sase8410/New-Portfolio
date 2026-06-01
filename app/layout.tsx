@@ -24,6 +24,14 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.png",
   },
+  openGraph: {
+    title: "Santiago Segovia | Mathematical Computing",
+    description:
+      "My computer science/mathemtatics portofolio showcasing my projects and skills in numerical computing, machine learning, and software engineering.",
+    url: "https://www.santiagosegovia.com",
+    siteName: "Santiago Segovia Portfolio",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
