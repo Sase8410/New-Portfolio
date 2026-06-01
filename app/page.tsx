@@ -25,32 +25,61 @@ export default function Home() {
 
   const [emailOpen, setEmailOpen] = useState(false);
   const [messageSent, setMessageSent] = useState(false);
+  const [messageError, setMessageError] = useState(false);
+  const [errorText, setErrorText] = useState("");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    const form = e.currentTarget;
-    const formData = new FormData(form);
+  setMessageError(false);
+  setErrorText("");
 
+  const form = e.currentTarget;
+  const formData = new FormData(form);
+
+  const name = String(formData.get("name") || "").trim();
+  const email = String(formData.get("email") || "").trim();
+  const message = String(formData.get("message") || "").trim();
+
+  if (!name || !email || !message) {
+    setMessageError(true);
+    setErrorText("Please complete all fields.");
+    return;
+  }
+
+  if (!/\S+@\S+\.\S+/.test(email)) {
+    setMessageError(true);
+    setErrorText("Please enter a valid email address.");
+    return;
+  }
+
+  try {
     const response = await fetch("/api/contact", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        name: formData.get("name"),
-        email: formData.get("email"),
-        message: formData.get("message"),
+        name,
+        email,
+        message,
       }),
     });
 
     if (response.ok) {
       setMessageSent(true);
+      setMessageError(false);
+      setErrorText("");
       form.reset();
     } else {
-      alert("Something went wrong.");
+      setMessageError(true);
+      setErrorText("Failed to send message. Please try again later.");
     }
-  };
+  } catch {
+    setMessageError(true);
+    setErrorText("Failed to send message. Please try again later.");
+  }
+};
 
   return (
     <main className="relative min-h-screen overflow-x-hidden">
@@ -266,6 +295,8 @@ export default function Home() {
             <button
               onClick={() => {
                 setMessageSent(false);
+                setMessageError(false);
+                setErrorText("");
                 setEmailOpen(true);
               }}
               className="rounded-full border border-black/10 bg-white px-6 py-3 text-gray-700 transition hover:border-blue-500 hover:text-blue-500"
@@ -278,10 +309,11 @@ export default function Home() {
             <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 px-6 backdrop-blur-sm">
               <div className="w-full max-w-lg rounded-3xl border border-black/10 bg-white p-8 shadow-2xl">
                 <div className="mb-6 flex items-start justify-between gap-4">
-                  <div>
+                  <div className="w-full">
                     <p className="text-sm uppercase tracking-[0.3em] text-blue-500">
                       Send a Message
                     </p>
+
                     <h3 className="mt-2 text-xl font-bold text-black">
                       segoviasantiago945@gmail.com
                     </h3>
@@ -290,6 +322,8 @@ export default function Home() {
                   <button
                     onClick={() => {
                       setMessageSent(false);
+                      setMessageError(false);
+                      setErrorText("");
                       setEmailOpen(false);
                     }}
                     className="rounded-full border border-black/10 px-3 py-1 text-gray-500 transition hover:border-blue-500 hover:text-blue-500"
@@ -297,6 +331,12 @@ export default function Home() {
                     ✕
                   </button>
                 </div>
+
+                {messageError && (
+                      <div className="mb-6 rounded-2xl border border-red-500/20 bg-red-500/10 px-5 py-4 text-sm text-red-500">
+                        {errorText}
+                      </div>
+                    )}
 
                 {messageSent ? (
                   <div className="py-8 text-center">
@@ -315,6 +355,8 @@ export default function Home() {
                     <button
                       onClick={() => {
                         setMessageSent(false);
+                        setMessageError(false);
+                        setErrorText("");
                         setEmailOpen(false);
                       }}
                       className="mt-8 rounded-full bg-black px-6 py-3 text-white transition hover:opacity-80"
@@ -323,10 +365,13 @@ export default function Home() {
                     </button>
                   </div>
                 ) : (
-                  <form onSubmit={handleSubmit} className="space-y-4">
+                  <form
+                    onSubmit={handleSubmit}
+                    noValidate
+                    className="space-y-4"
+                  >
                     <input
                       name="name"
-                      required
                       placeholder="Name"
                       className="w-full rounded-2xl border border-black/10 px-4 py-3 outline-none transition focus:border-blue-500"
                     />
@@ -334,14 +379,12 @@ export default function Home() {
                     <input
                       name="email"
                       type="email"
-                      required
                       placeholder="Email"
                       className="w-full rounded-2xl border border-black/10 px-4 py-3 outline-none transition focus:border-blue-500"
                     />
 
                     <textarea
                       name="message"
-                      required
                       placeholder="Message"
                       rows={5}
                       className="w-full resize-none rounded-2xl border border-black/10 px-4 py-3 outline-none transition focus:border-blue-500"
