@@ -20,7 +20,7 @@ import FullPageGraph from "@/components/FullPageGraph";
 import DesmosPanel from "@/components/DesmosPanel";
 
 export default function Home() {
-  const [desmosCollapsed, setDesmosCollapsed] = useState(true);
+  const [desmosCollapsed, setDesmosCollapsed] = useState(false);
   const [graphIndex, setGraphIndex] = useState(0);
 
   const [emailOpen, setEmailOpen] = useState(false);
@@ -92,14 +92,12 @@ export default function Home() {
         }}
       />
 
-      <div className="hidden lg:block">
-        <DesmosPanel
-          collapsed={desmosCollapsed}
-          setCollapsed={setDesmosCollapsed}
-          formulaIndex={graphIndex}
-          typingDelay={900}
-        />
-      </div>
+      <DesmosPanel
+        collapsed={desmosCollapsed}
+        setCollapsed={setDesmosCollapsed}
+        formulaIndex={graphIndex}
+        typingDelay={900}
+      />
 
       <nav
         className={`${ibmPlexMono.className} fixed top-0 z-50 flex w-full items-center justify-between border-b border-white/10 bg-[#2f2f2f] px-6 py-4 md:px-20 tracking-wide`}
@@ -136,19 +134,15 @@ export default function Home() {
       </nav>
 
       <div
-        className={`relative z-20 grid w-full transition-all duration-500 ease-in-out ${
-          desmosCollapsed
-            ? "lg:grid-cols-[72px_minmax(0,1fr)]"
-            : "lg:grid-cols-[72px_minmax(0,1fr)] 2xl:grid-cols-[420px_minmax(0,1fr)]"
+        className={`relative z-20 transition-all duration-500 ease-in-out ${
+          desmosCollapsed ? "md:ml-[72px]" : "md:ml-[420px]"
         }`}
       >
-        <div className="hidden lg:block" />
-
-        <div className="min-w-0">
         <section
           id="hero"
-          className="relative flex min-h-screen items-center px-5 pb-20 pt-28 sm:px-8 lg:px-20 lg:pb-24 lg:pt-40">
-          <div className="relative z-20 w-full max-w-3xl rounded-3xl border border-black/10 bg-white/85 p-6 shadow-sm backdrop-blur-sm sm:p-8 lg:-translate-y-24">
+          className="relative flex min-h-screen items-center px-6 pb-24 pt-40 md:px-20"
+        >
+          <div className="relative z-20 max-w-3xl -translate-y-24 rounded-3xl border border-black/10 bg-white/75 p-8 shadow-sm backdrop-blur-sm">
             <motion.p
               className="mb-4 text-sm uppercase tracking-[0.4em] text-blue-500"
               initial={{ opacity: 0, y: 20 }}
@@ -158,7 +152,7 @@ export default function Home() {
             </motion.p>
 
             <motion.h1
-              className="text-4xl font-bold leading-tight text-black sm:text-5xl md:text-6xl"
+              className="text-5xl font-bold leading-tight text-black md:text-6xl"
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.15 }}
@@ -167,7 +161,7 @@ export default function Home() {
             </motion.h1>
 
             <motion.p
-              className="mt-6 max-w-2xl text-base leading-7 text-gray-600 sm:text-lg sm:leading-8"
+              className="mt-6 max-w-2xl text-lg leading-8 text-gray-600"
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
@@ -210,12 +204,12 @@ export default function Home() {
 
         <SkillsSection />
 
-        <section id="projects" className="relative z-20 px-5 py-16 sm:px-8 md:px-20 md:py-24">
+        <section id="projects" className="relative z-20 px-6 py-24 md:px-20">
           <p className="mb-3 text-sm uppercase tracking-[0.3em] text-blue-500">
             Proofs
           </p>
 
-          <h2 className="mb-10 text-3xl font-bold text-black sm:text-4xl md:mb-12 md:text-5xl">
+          <h2 className="mb-12 text-4xl font-bold text-black md:text-5xl">
             Selected Projects
           </h2>
           <div className="grid gap-8 md:grid-cols-2">
@@ -234,7 +228,7 @@ export default function Home() {
                   </span>
                 </div>
 
-                <h3 className="text-2xl font-semibold text-black transition group-hover:text-blue-500 sm:text-3xl">
+                <h3 className="text-3xl font-semibold text-black transition group-hover:text-blue-500">
                   {project.title}
                 </h3>
 
@@ -270,12 +264,12 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="contact" className="relative z-20 px-5 py-16 sm:px-8 md:px-20 md:py-24">
+        <section id="contact" className="relative z-20 px-6 py-24 md:px-20">
           <p className="mb-3 text-sm uppercase tracking-[0.3em] text-blue-500">
             Connect the Points
           </p>
 
-          <h2 className="text-3xl font-bold text-black sm:text-4xl">
+          <h2 className="text-4xl font-bold text-black">
             Let’s build something meaningful.
           </h2>
 
@@ -312,15 +306,15 @@ export default function Home() {
           </div>
 
           {emailOpen && (
-            <div className="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto bg-black/40 px-4 py-6 backdrop-blur-sm sm:px-6">
-              <div className="w-full max-w-lg rounded-3xl border border-black/10 bg-white p-6 shadow-2xl sm:p-8">
+            <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 px-6 backdrop-blur-sm">
+              <div className="w-full max-w-lg rounded-3xl border border-black/10 bg-white p-8 shadow-2xl">
                 <div className="mb-6 flex items-start justify-between gap-4">
                   <div className="w-full">
                     <p className="text-sm uppercase tracking-[0.3em] text-blue-500">
                       Send a Message
                     </p>
 
-                    <h3 className="mt-2 break-words text-base font-bold text-black sm:text-xl">
+                    <h3 className="mt-2 text-xl font-bold text-black">
                       segoviasantiago945@gmail.com
                     </h3>
                   </div>
@@ -408,7 +402,6 @@ export default function Home() {
             </div>
           )}
         </section>
-      </div>
       </div>
     </main>
   );
