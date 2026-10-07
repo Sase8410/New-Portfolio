@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+@source "./";
+@source "../components";
+
 html {
   scroll-behavior: smooth;
 }
@@ -15,18 +18,20 @@ body {
   background-color: #ffffff;
 }
 
-h1,
-h2,
-h3 {
-  font-family: var(--font-playfair);
-  color: #111827;
-}
+@layer base {
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-playfair);
+    color: #111827;
+  }
 
-p,
-a,
-span,
-button {
-  font-family: var(--font-inter);
+  p,
+  a,
+  span,
+  button {
+    font-family: var(--font-inter);
+  }
 }
 
 ::selection {

@@ -1,15 +1,15 @@
 const skillGroups = [
   {
     title: "Languages",
-    skills: ["Python", "C++", "CUDA", "MATLAB", "SQL", "JavaScript", "TypeScript", "PHP", "R"],
+    skills: ["Python", "C++", "C#", "CUDA", "MATLAB", "SQL", "JavaScript", "TypeScript", "PHP", "R"],
   },
   {
     title: "Databases & Tools",
-    skills: ["MySQL", "PostgreSQL", "MariaDB", "Azure", "Git", "VS Code", "PyCharm",],
+    skills: ["MySQL", "PostgreSQL", "MariaDB", "Azure", "Git", "VS Code", "PyCharm"],
   },
   {
     title: "Frameworks & Libraries",
-    skills: ["PyTorch", "scikit-learn", "pandas", "NumPy", "React", "Next.js", "Node.js", "CUDA", "cuBLAS",],
+    skills: ["PyTorch", "scikit-learn", "pandas", "NumPy", "React", "Next.js", "Node.js", "CUDA", "cuBLAS"],
   },
 ];
 
@@ -21,7 +21,7 @@ export default function SkillsSection() {
       </p>
 
       <h2 className="mb-12 text-4xl font-bold text-gray-900 md:text-5xl">
-        Technologies I use to turn ideas into systems.
+        Technical Skills I have acquired.
       </h2>
 
       <div className="grid gap-6 md:grid-cols-3">

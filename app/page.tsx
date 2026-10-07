@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { IBM_Plex_Mono } from "next/font/google";
@@ -10,14 +9,13 @@ const ibmPlexMono = IBM_Plex_Mono({
   weight: ["400", "500", "600"],
 });
 
-import { projects } from "@/data/projects";
-
 import AboutSection from "@/components/AboutSection";
 import SkillsSection from "@/components/SkillsSection";
 import ParticleBackground from "@/components/ParticleBackground";
 import CoordinatePlane from "@/components/CoordinatePlane";
 import FullPageGraph from "@/components/FullPageGraph";
 import DesmosPanel from "@/components/DesmosPanel";
+import ProjectsSection from "@/components/ProjectsSection";
 
 export default function Home() {
   const [desmosCollapsed, setDesmosCollapsed] = useState(false);
@@ -29,76 +27,60 @@ export default function Home() {
   const [errorText, setErrorText] = useState("");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  setMessageError(false);
-  setErrorText("");
+    setMessageError(false);
+    setErrorText("");
 
-  const form = e.currentTarget;
-  const formData = new FormData(form);
+    const form = e.currentTarget;
+    const formData = new FormData(form);
 
-  const name = String(formData.get("name") || "").trim();
-  const email = String(formData.get("email") || "").trim();
-  const message = String(formData.get("message") || "").trim();
+    const name = String(formData.get("name") || "").trim();
+    const email = String(formData.get("email") || "").trim();
+    const message = String(formData.get("message") || "").trim();
 
-  if (!name || !email || !message) {
-    setMessageError(true);
-    setErrorText("Please complete all fields.");
-    return;
-  }
+    if (!name || !email || !message) {
+      setMessageError(true);
+      setErrorText("Please complete all fields.");
+      return;
+    }
 
-  if (!/\S+@\S+\.\S+/.test(email)) {
-    setMessageError(true);
-    setErrorText("Please enter a valid email address.");
-    return;
-  }
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      setMessageError(true);
+      setErrorText("Please enter a valid email address.");
+      return;
+    }
 
-  try {
-    const response = await fetch("/api/contact", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name,
-        email,
-        message,
-      }),
-    });
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          message,
+        }),
+      });
 
-    if (response.ok) {
-      setMessageSent(true);
-      setMessageError(false);
-      setErrorText("");
-      form.reset();
-    } else {
+      if (response.ok) {
+        setMessageSent(true);
+        setMessageError(false);
+        setErrorText("");
+        form.reset();
+      } else {
+        setMessageError(true);
+        setErrorText("Failed to send message. Please try again later.");
+      }
+    } catch {
       setMessageError(true);
       setErrorText("Failed to send message. Please try again later.");
     }
-  } catch {
-    setMessageError(true);
-    setErrorText("Failed to send message. Please try again later.");
-  }
-};
+  };
 
   return (
     <main className="relative min-h-screen overflow-x-hidden">
-      <ParticleBackground />
-      <CoordinatePlane />
-      <FullPageGraph
-        graphIndex={graphIndex}
-        onCycleComplete={() => {
-          setGraphIndex((current) => (current + 1));
-        }}
-      />
-
-      <DesmosPanel
-        collapsed={desmosCollapsed}
-        setCollapsed={setDesmosCollapsed}
-        formulaIndex={graphIndex}
-        typingDelay={900}
-      />
-
       <nav
         className={`${ibmPlexMono.className} fixed top-0 z-50 flex w-full items-center justify-between border-b border-white/10 bg-[#2f2f2f] px-6 py-4 md:px-20 tracking-wide`}
       >
@@ -133,136 +115,104 @@ export default function Home() {
         </div>
       </nav>
 
-      <div
-        className={`relative z-20 transition-all duration-500 ease-in-out ${
-          desmosCollapsed ? "md:ml-[72px]" : "md:ml-[420px]"
-        }`}
-      >
-        <section
-          id="hero"
-          className="relative flex min-h-screen items-center px-6 pb-24 pt-40 md:px-20"
+      <section id="hero" className="relative min-h-screen overflow-hidden">
+        <ParticleBackground />
+        <CoordinatePlane />
+        <FullPageGraph
+          graphIndex={graphIndex}
+          onCycleComplete={() => {
+            setGraphIndex((current) => current + 1);
+          }}
+        />
+
+        <DesmosPanel
+          collapsed={desmosCollapsed}
+          setCollapsed={setDesmosCollapsed}
+          formulaIndex={graphIndex}
+          typingDelay={900}
+        />
+
+        <div
+          className={`relative z-20 transition-all duration-500 ease-in-out ${
+            desmosCollapsed ? "md:ml-[72px]" : "md:ml-[420px]"
+          }`}
         >
-          <div className="relative z-20 max-w-3xl -translate-y-24 rounded-3xl border border-black/10 bg-white/75 p-8 shadow-sm backdrop-blur-sm">
-            <motion.p
-              className="mb-4 text-sm uppercase tracking-[0.4em] text-blue-500"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-            >
-              Santiago Segovia
-            </motion.p>
-
-            <motion.h1
-              className="text-5xl font-bold leading-tight text-black md:text-6xl"
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.15 }}
-            >
-              Mathematician & Computer Scientist.
-            </motion.h1>
-
-            <motion.p
-              className="mt-6 max-w-2xl text-lg leading-8 text-gray-600"
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-            >
-              I design and build full-stack applications, machine learning systems, and computational tools driven by strong mathematical foundations.
-            </motion.p>
-
-            <motion.div
-              className="mt-8 flex flex-wrap gap-4"
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.45 }}
-            >
-              <a
-                href="#projects"
-                className="rounded-full border border-black/10 bg-black px-6 py-3 font-semibold text-white transition hover:opacity-80"
+          <section className="relative flex min-h-screen items-center px-6 pb-24 pt-40 md:px-20">
+            <div className="relative z-20 max-w-3xl -translate-y-24 rounded-3xl border border-black/10 bg-white/75 p-8 shadow-sm backdrop-blur-sm">
+              <motion.p
+                className="mb-4 text-sm uppercase tracking-[0.4em] text-blue-500"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
               >
-                View Projects
-              </a>
+                Santiago Segovia
+              </motion.p>
 
-              <a
-                href="#contact"
-                className="rounded-full border border-black/10 bg-white px-6 py-3 text-gray-700 transition hover:border-blue-500 hover:text-blue-500"
+              <motion.h1
+                className="text-5xl font-bold leading-tight text-black md:text-6xl"
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.15 }}
               >
-                Contact Me
-              </a>
+                Mathematician & Computer Scientist.
+              </motion.h1>
 
-              <a
-                href="/resume/Santiago-Segovia-Resume.pdf"
-                download
-                className="rounded-full border border-black/10 bg-white px-6 py-3 text-gray-700 transition hover:border-blue-500 hover:text-blue-500"
+              <motion.p
+                className="mt-6 max-w-2xl text-lg leading-8 text-gray-600"
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
               >
-                Download Resume
-              </a>
-            </motion.div>
-          </div>
-        </section>
+                Recent graduate from University of Houston, with a strong background in mathematics and computer science. Looking for full time opportunities in Data Engineering or Software Engineering.
+              </motion.p>
 
+              <motion.div
+                className="mt-8 flex flex-wrap gap-4"
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.45 }}
+              >
+                <a
+                  href="#projects"
+                  className="rounded-full border border-black/10 bg-black px-6 py-3 font-semibold text-white transition hover:opacity-80"
+                >
+                  View Projects
+                </a>
+
+                <a
+                  href="#contact"
+                  className="rounded-full border border-black/10 bg-white px-6 py-3 text-gray-700 transition hover:border-blue-500 hover:text-blue-500"
+                >
+                  Contact Me
+                </a>
+
+                <a
+                  href="/resume/Santiago-Segovia-Resume.pdf"
+                  download
+                  className="rounded-full border border-black/10 bg-white px-6 py-3 text-gray-700 transition hover:border-blue-500 hover:text-blue-500"
+                >
+                  Download Resume
+                </a>
+              </motion.div>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <div
+  className="
+    relative z-30
+    bg-white
+    w-full h-full
+    opacity-100
+    bg-[linear-gradient(rgba(0,0,0,0.045)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.045)_1px,transparent_1px)]
+    bg-[size:32px_32px]
+  "
+>
         <AboutSection />
 
         <SkillsSection />
 
-        <section id="projects" className="relative z-20 px-6 py-24 md:px-20">
-          <p className="mb-3 text-sm uppercase tracking-[0.3em] text-blue-500">
-            Proofs
-          </p>
-
-          <h2 className="mb-12 text-4xl font-bold text-black md:text-5xl">
-            Selected Projects
-          </h2>
-          <div className="grid gap-8 md:grid-cols-2">
-            {projects.map((project, index) => (
-              <motion.div
-                key={project.title}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ y: -10, scale: 1.02 }}
-                className="group relative overflow-hidden rounded-3xl border border-black/10 bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
-              >
-                <div className="mb-5">
-                  <span className="rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs uppercase tracking-[0.2em] text-blue-500">
-                    {project.status}
-                  </span>
-                </div>
-
-                <h3 className="text-3xl font-semibold text-black transition group-hover:text-blue-500">
-                  {project.title}
-                </h3>
-
-                <p className="mt-5 leading-7 text-gray-600">
-                  {project.description}
-                </p>
-
-                <div className="mt-6 flex flex-wrap gap-2">
-                  {project.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="rounded-full border border-black/10 px-3 py-1 text-sm text-gray-600"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                <Link
-                  href={project.link}
-                  target={project.link.startsWith("http") ? "_blank" : undefined}
-                  rel={
-                    project.link.startsWith("http")
-                      ? "noopener noreferrer"
-                      : undefined
-                  }
-                  className="mt-8 inline-block rounded-full border border-black/10 px-5 py-2 text-sm text-gray-700 transition hover:border-blue-500 hover:text-blue-500"
-                >
-                  View Details
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-        </section>
+        <ProjectsSection />
 
         <section id="contact" className="relative z-20 px-6 py-24 md:px-20">
           <p className="mb-3 text-sm uppercase tracking-[0.3em] text-blue-500">
@@ -270,7 +220,7 @@ export default function Home() {
           </p>
 
           <h2 className="text-4xl font-bold text-black">
-            Let’s build something meaningful.
+            Let’s talk!
           </h2>
 
           <div className="mt-8 flex flex-wrap gap-4">
@@ -333,10 +283,10 @@ export default function Home() {
                 </div>
 
                 {messageError && (
-                      <div className="mb-6 rounded-2xl border border-red-500/20 bg-red-500/10 px-5 py-4 text-sm text-red-500">
-                        {errorText}
-                      </div>
-                    )}
+                  <div className="mb-6 rounded-2xl border border-red-500/20 bg-red-500/10 px-5 py-4 text-sm text-red-500">
+                    {errorText}
+                  </div>
+                )}
 
                 {messageSent ? (
                   <div className="py-8 text-center">
