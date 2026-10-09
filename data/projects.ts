@@ -226,4 +226,51 @@ export const projects = [
       },
     ],
   },
+{
+  title: "Evolutionary Moving Sofa Optimization",
+  slug: "evolutionary-moving-sofa-optimization",
+  date: "October 2026 - Present",
+  description:
+    "Developing an evolutionary optimization system to search for large two-dimensional shapes that can move through a right-angled hallway. The project combines geometric simulation, collision detection, and genetic search, with the goal of jointly optimizing sofa geometry and its path.",
+  tags: ["Python", "NumPy", "Matplotlib", "Shapely"],
+  github: "",
+  status: "In Progress",
+  sections: [
+    {
+      heading: "Project Overview",
+      text:
+        "The moving sofa problem asks for the largest-area rigid two-dimensional shape that can move around a right-angled corner in a hallway of unit width. A candidate must complete the turn through translation and rotation without crossing the hallway boundaries. Its usefulness therefore depends on both its geometry and the existence of a feasible motion through the corner.\n\nThis project approaches the problem as a computational search over candidate shapes and movement paths. The objective is to maximize sofa area subject to geometric feasibility throughout the motion. An evolutionary algorithm provides a mechanism for exploring candidates iteratively, while a geometric simulation evaluates their interaction with the hallway. The project is currently under development; it does not yet establish an optimal shape or a validated improvement over a reference construction.",
+    },
+    {
+      heading: "Geometric Simulation",
+      text:
+        "The simulation represents the hallway as the union of perpendicular rectangular regions and the sofa as a polygon defined by ordered vertices. Each sofa configuration is described by a horizontal position, vertical position, and rotation angle. Applying these transformations to the polygon produces its position and orientation at a particular point in the movement sequence.\n\nShapely supports geometric operations for evaluating the transformed sofa against the hallway, while Matplotlib provides visualization and interactive controls. The initial simulation uses a predefined route to establish the relationship between translation, rotation, and collision detection. This controlled setup provides a foundation for testing candidate geometry before introducing a larger search over possible movements.",
+    },
+    {
+      heading: "Shape Representation and Path Design",
+      text:
+        "Candidate shapes are represented through polygonal geometry, allowing their boundaries and areas to be evaluated computationally. The representation determines which shapes the search can express: a small number of adjustable vertices limits geometric complexity, while a larger number expands the search space and increases the cost of evaluation. More flexible boundaries also introduce validity concerns, including self-intersections and degenerate edges.\n\nShape and path are coupled design variables. A candidate that collides along one route may still pass through the corner using a different sequence of translations and rotations. The intended progression is therefore to move beyond a fixed reference route toward joint optimization of geometry and motion. This would allow the search to modify how a sofa navigates the corner as well as the shape of the sofa itself.",
+    },
+    {
+      heading: "Fitness and Evolutionary Search",
+      text:
+        "The optimization framework uses a fitness function to connect geometric evaluation with candidate selection. Area represents the quantity to maximize, while collision behavior represents a constraint on whether the candidate can complete the movement. These quantities must be interpreted together: a large polygon that overlaps a wall is not a valid solution, regardless of its area advantage.\n\nThe genetic algorithm stage is designed to explore a population of candidates through repeated evaluation, selection, and variation. Higher-quality candidates guide subsequent generations, while mutations introduce alternative geometries or motion parameters. A central design challenge is maintaining enough variation to explore different solutions without producing an overwhelming number of invalid candidates. Fitness penalties can guide the search toward feasibility, but final acceptance must depend on explicit geometric checks.",
+    },
+    {
+      heading: "Interactive Development",
+      text:
+        "The project includes a visual development workflow for inspecting sofa configurations and movement through the hallway. Interactive controls make it possible to examine the simulation without repeatedly supplying terminal inputs. This supports direct inspection of where contact or overlap occurs and how changes to geometry or motion affect the attempted turn.\n\nVisualization also supports debugging the relationship between the numerical representation and the physical interpretation of the problem. An unexpected collision may arise from the candidate itself, the selected path, or the transformation logic. Inspecting intermediate configurations helps distinguish these possibilities before their effects are incorporated into evolutionary search.",
+    },
+    {
+      heading: "Validation and Planned Evaluation",
+      text:
+        "A major validation issue is the difference between checking sampled configurations and establishing feasibility throughout continuous motion. A sofa may fit at two sampled positions but cross a wall between them. Increasing the sampling resolution can expose missed collisions, but a finite collection of successful checks alone does not constitute a mathematical proof of continuous feasibility.\n\nPlanned evaluation will compare candidate area, geometric validity, path feasibility, and computational cost. Promising candidates will require stricter motion checks than those used during exploratory search. Repeated evolutionary runs will also help distinguish reproducible behavior from favorable random initialization. Comparisons with a reference such as the Gerver sofa must use the same hallway width and consistent geometric assumptions; an apparent area improvement would require rigorous validation before being reported as a valid result.",
+    },
+    {
+      heading: "Current Status and Next Steps",
+      text:
+        "Development has progressed through the hallway simulation, separation of shape and path logic, candidate-shape controls, and implementations for fitness evaluation, genetic search, and optimizer interaction. These components form the foundation of the project, while integration, tuning, and systematic evaluation remain ongoing.\n\nThe next priorities are to strengthen geometric validation, expand the candidate representation, and connect path variation more fully to the evolutionary search. The longer-term objective is to investigate how effectively the system can discover large feasible shapes and how its results compare with established reference geometry. Claims about convergence, achieved area, and comparative performance will depend on completed experiments.",
+    },
+  ],
+},
 ];
